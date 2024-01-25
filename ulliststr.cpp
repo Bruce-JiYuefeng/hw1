@@ -161,13 +161,14 @@ std::string* ULListStr::getValAtLoc(size_t loc) const {
   }
 
   Item* current = head_;
-  size_t index = 0;
 
   while(current != nullptr){
-    if(index <= loc && loc < index + ARRSIZE){
-      return &current->val[loc - index + current->first];
+    size_t numElementsInItem = current->last - current->first;
+    if(loc < numElementsInItem) {
+      return &current->val[current->first + loc];
     }
-    index += current->last - current->first;
+
+    loc -= numElementsInItem;
     current = current->next;
   }
 
